@@ -1,5 +1,60 @@
 from manim import *
 
+class BeatingHeart(Scene):
+    def construct(self):
+        for a in range(70, 150, 1):
+            heart = FunctionGraph(
+                lambda x: (x ** 2) ** (1 / 3) + (3.3 - x ** 2) ** 0.5 * np.sin(a / 10 * PI * x),
+                x_range=[-1.8, 1.8],
+                color=RED,
+            )
+
+            self.add(heart)
+            self.wait(1 / 30)
+            self.remove(heart)
+
+        self.wait()
+
+        for a in range(150, 70, -1):
+            heart = FunctionGraph(
+                lambda x: (x ** 2) ** (1 / 3) + (3.3 - x ** 2) ** 0.5 * np.sin(a / 10 * PI * x),
+                x_range=[-1.8, 1.8],
+                color=RED,
+            )
+
+            self.add(heart)
+            self.wait(1 / 30)
+            self.remove(heart)
+
+    """
+    Old way of doing it, does not animate well
+
+    def construct(self):
+        heart_relaxed = FunctionGraph(
+            lambda x: (x ** 2) ** (1 / 3) + (3.3 - x ** 2) ** 0.5 * np.sin(7 * PI * x),
+            x_range=[-1.8, 1.8],
+            color=RED,
+        )
+
+        heart_contracted = FunctionGraph(
+            lambda x: (x ** 2) ** (1 / 3) + (3.3 - x ** 2) ** 0.5 * np.sin(15 * PI * x),
+            x_range=[-1.8, 1.8],
+            color=RED,
+        )
+
+        self.play(Create(heart_relaxed))
+        self.play(
+            ReplacementTransform(heart_relaxed, heart_contracted),
+            run_time=2,
+        )
+        self.play(
+            ReplacementTransform(heart_contracted, heart_relaxed),
+            run_time=2,
+        )
+        self.play(FadeOut(heart_relaxed))
+    """
+
+
 class SimpleHeart(Scene):
     def construct(self):
         heart = ParametricFunction(
@@ -21,3 +76,4 @@ class SimpleHeart(Scene):
 
         self.play(Write(Text("I love you!").scale(2)))
         self.wait()
+
